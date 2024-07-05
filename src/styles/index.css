@@ -6,6 +6,16 @@ body {
   font-family: sans-serif;
 }
 
+#root {
+  display: flex;
+}
+
+.appIcon {
+  width: inherit;
+  height: inherit;
+  color: currentColor;
+}
+
 .sidebar {
   @apply space-y-2;
 }

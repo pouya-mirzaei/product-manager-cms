@@ -14,10 +14,10 @@ function Sidebar() {
   ];
 
   return (
-    <section className="w-60 bg-bg-300 min-h-screen">
+    <section className="basis-60 bg-bg-300 min-h-screen">
       {/* logo and brand name */}
       <div className="h-16 border-b border-[#C8CBD9]">
-        <h1 className="h-full text-primary-200 flex items-center justify-center gap-x-2">
+        <h1 className="h-full text-primary-200 flex items-center justify-center gap-x-2 cursor-pointer">
           <span className="font-bold w-6 h-6 bg-primary-200 rounded-full text-white text-center">
             G
           </span>
