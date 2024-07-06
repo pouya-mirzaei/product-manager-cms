@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import UseSVG from './UseSVG';
+import { Link } from 'react-router-dom';
 
 function Sidebar() {
   const [activeItem, setActiveItem] = useState(0);
@@ -28,7 +29,7 @@ function Sidebar() {
 
       {/* menu */}
       <div className="px-5 py-11 flex items-start justify-center flex-col gap-y-5">
-        <span className="text-slat-e600 text-sm">MENU</span>
+        <span className="text-black/50 text-xs">MENU</span>
 
         <nav className="w-full">
           <ul className="sidebar">
@@ -38,12 +39,12 @@ function Sidebar() {
                 key={item.id}
                 onClick={() => setActiveItem(item.id)}
               >
-                <a href="#">
+                <Link to={item.title.toLowerCase()}>
                   <span className="icon">
                     <UseSVG path={item.icon} />
                   </span>
                   <span>{item.title}</span>
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

@@ -21,14 +21,18 @@ body {
 }
 
 .sidebar li {
-  @apply w-full rounded-md h-11 flex items-center pl-5 font-medium text-secondary-200 cursor-pointer transition-all;
+  border-radius: 0.5rem;
+}
+
+.sidebar li a {
+  @apply inline-block w-full rounded-md h-11 flex items-center pl-5 font-medium text-secondary-200 cursor-pointer transition-all;
 }
 
 .sidebar li a {
   @apply flex items-center gap-x-3;
 }
 
-.sidebar li.active {
+.sidebar li.active a {
   @apply text-primary-200 bg-primary-100/10;
 }
 
