@@ -6,12 +6,12 @@ function Sidebar() {
   const [activeItem, setActiveItem] = useState(0);
 
   const menuItems = [
-    { id: 0, title: 'Home page', icon: 'home' },
-    { id: 1, title: 'Products', icon: 'products' },
-    { id: 2, title: 'Comments', icon: 'comment' },
-    { id: 3, title: 'Users', icon: 'users' },
-    { id: 4, title: 'Orders', icon: 'orders' },
-    { id: 5, title: 'Offs', icon: 'off' },
+    { id: 0, title: 'Home page', slag: '/', icon: 'home' },
+    { id: 1, title: 'Products', slag: 'products', icon: 'products' },
+    { id: 2, title: 'Comments', slag: 'comments', icon: 'comment' },
+    { id: 3, title: 'Users', slag: 'users', icon: 'users' },
+    { id: 4, title: 'Orders', slag: 'orders', icon: 'orders' },
+    { id: 5, title: 'Offs', slag: 'offs', icon: 'off' },
   ];
 
   return (
@@ -39,7 +39,7 @@ function Sidebar() {
                 key={item.id}
                 onClick={() => setActiveItem(item.id)}
               >
-                <Link to={item.title.toLowerCase()}>
+                <Link to={item.slag.toLowerCase()}>
                   <span className="icon">
                     <UseSVG path={item.icon} />
                   </span>
