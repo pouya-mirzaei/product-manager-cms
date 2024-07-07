@@ -1,20 +1,25 @@
 import React from 'react';
 import UseSVG from './UseSVG';
+import { Input } from 'antd';
+const { Search } = Input;
 
 export default function Header() {
+  const onSearch = (value, e, info) => {
+    console.log(value);
+  };
+
   return (
-    <header className="h-16 bg-white flex items-center justify-between py-4 px-10 border-b">
+    <header className="h-16 bg-white flex items-center justify-between py-4 px-10 border-b border-[#C8CBD9]">
       {/* search box */}
       <div className="basis-3/5 relative">
-        <input
-          type="search"
-          id=""
+        <Search
           placeholder="Search"
-          className="w-full bg-[#627B87]/10 h-5 py-5 px-4 rounded-md hover:bg-slate-200 focus:bg-slate-300 transition-all focus:shadow-lg focus:shadow-black/20"
+          allowClear
+          onSearch={onSearch}
+          style={{
+            width: '100%',
+          }}
         />
-        <span className="w-5 h-5 inline-block absolute right-2 top-1/2 -translate-y-1/2 text-[#627B87] cursor-pointe outline-none">
-          <UseSVG path="search" />
-        </span>
       </div>
       {/* user profile */}
       <div className="flex items-center justify-around basis-64  h-8 py-5">

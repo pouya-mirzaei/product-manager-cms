@@ -21,23 +21,19 @@ body {
 }
 
 .sidebar li {
-  border-radius: 0.5rem;
+  border-radius: 0.375rem;
 }
 
 .sidebar li a {
-  @apply inline-block w-full rounded-md h-11 flex items-center pl-5 font-medium text-secondary-200 cursor-pointer transition-all;
-}
-
-.sidebar li a {
-  @apply flex items-center gap-x-3;
+  @apply inline-block w-full rounded-md h-11 flex items-center pl-5 font-medium text-secondary-200 cursor-pointer transition-all flex items-center gap-x-3 hover:shadow-md;
 }
 
 .sidebar li.active a {
-  @apply text-primary-200 bg-primary-100/10;
+  @apply text-primary-200 bg-blue-200/60;
 }
 
 .sidebar li:not(.active):hover {
-  @apply bg-primary-100/10;
+  @apply bg-blue-200/80;
 }
 
 .sidebar li.active:hover {

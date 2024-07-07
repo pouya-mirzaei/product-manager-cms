@@ -3,13 +3,14 @@ import Header from './Components/Header';
 import Sidebar from './Components/Sidebar';
 
 import routes from './routes';
+import SidebarMenu from './Components/SidebarMenu';
 
 function App() {
   const router = useRoutes(routes);
 
   return (
     <>
-      <Sidebar />
+      <SidebarMenu />
       <section className="flex flex-col grow">
         <Header />
         <main>{router}</main>
