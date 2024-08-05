@@ -16,13 +16,8 @@ body {
   color: currentColor;
 }
 
-main,
-.sidebar {
+main {
   min-height: calc(100vh - 4em);
-}
-
-.sidebar {
-  flex-basis: 15rem;
 }
 
 .sidebar li {

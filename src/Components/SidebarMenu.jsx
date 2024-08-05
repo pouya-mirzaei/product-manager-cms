@@ -37,7 +37,7 @@ const SidebarMenu = () => {
     navigate(items[0].children.find((item) => e.key == item.key).slag);
   };
   return (
-    <section className="sidebar">
+    <section className="basis-60">
       <a href="/">
         <div className="h-16 border-b border-[#C8CBD9]">
           <h1 className="h-full text-primary-200 flex items-center justify-center gap-x-2 cursor-pointer">
