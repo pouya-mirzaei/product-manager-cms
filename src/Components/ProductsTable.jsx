@@ -26,12 +26,21 @@ const columns = [
   {
     title: 'Price',
     dataIndex: 'price',
-    align: 'right', // Align price to the right
+    align: 'center', // Align price to the right
   },
   {
     title: 'Quantity',
     dataIndex: 'quantity',
-    align: 'center', // Center quantity content
+    align: 'center',
+    render: (count, data) => {
+      let color = count > 20 ? 'success' : count > 10 ? 'processing' : count > 5 ? 'warning' : 'error';
+      return (
+        <Tag color={color} bordered>
+          {' '}
+          {data.quantity}
+        </Tag>
+      );
+    },
   },
   {
     title: 'Action',
@@ -39,12 +48,10 @@ const columns = [
     render: (_, data) => (
       <Flex justifyContent="space-between" alignItems="center">
         <Button type="primary">Details</Button>
-        <Space size={8}>
-          <Button danger type="primary">
-            Delete
-          </Button>
-          <Button type="primary">Edit</Button>
-        </Space>
+        <Button danger type="primary">
+          Delete
+        </Button>
+        <Button type="primary">Edit</Button>
       </Flex>
     ),
     width: 250, // Adjust column width as needed
@@ -56,7 +63,7 @@ let data = [
     key: '1',
     name: 'John Brown',
     price: 32.99, // Add decimals for better presentation
-    quantity: 5,
+    quantity: 11,
     image: './public/img/oil.jpeg',
   },
   {
@@ -70,14 +77,21 @@ let data = [
     key: '3',
     name: 'John Brown 5',
     price: 32.99, // Add decimals for better presentation
-    quantity: 5,
+    quantity: 45,
     image: './public/img/oil.jpeg',
   },
   {
     key: '4',
     name: 'John Brown 4',
     price: 32.99, // Add decimals for better presentation
-    quantity: 5,
+    quantity: 4,
+    image: './public/img/oil.jpeg',
+  },
+  {
+    key: '4',
+    name: 'John Brown 4',
+    price: 32.99, // Add decimals for better presentation
+    quantity: 7,
     image: './public/img/oil.jpeg',
   },
 ];
