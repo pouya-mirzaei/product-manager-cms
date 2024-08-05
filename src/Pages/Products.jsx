@@ -1,6 +1,6 @@
 import React from 'react';
-import ErrorBox from '../Components/ErrorBox';
 import NewProductForm from '../Components/NewProductForm';
+import ProductsTable from '../Components/ProductsTable';
 
 export default function Products() {
   return (
@@ -8,6 +8,7 @@ export default function Products() {
       <h3 className="text-2xl font-semibold my-5">Add New Product</h3>
 
       <NewProductForm />
+      <ProductsTable />
     </section>
   );
 }

@@ -63,7 +63,7 @@ const NewProductForm = () => {
               },
             ]}
           >
-            <Input prefix={<DollarTwoTone />} type="number" />
+            <Input prefix={<DollarTwoTone />} type="number" min={0} />
           </Form.Item>
         </Col>
       </Row>
@@ -81,7 +81,7 @@ const NewProductForm = () => {
               },
             ]}
           >
-            <Input prefix={<AccountBookTwoTone />} type="number" max={100} />
+            <Input prefix={<AccountBookTwoTone />} type="number" max={100} min={0} />
           </Form.Item>
         </Col>
         <Col span={12}>

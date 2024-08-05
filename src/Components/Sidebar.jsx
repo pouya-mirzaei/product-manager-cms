@@ -19,9 +19,7 @@ function Sidebar() {
       {/* logo and brand name */}
       <div className="h-16 border-b border-[#C8CBD9]">
         <h1 className="h-full text-primary-200 flex items-center justify-center gap-x-2 cursor-pointer">
-          <span className="font-bold w-6 h-6 bg-primary-200 rounded-full text-white text-center">
-            G
-          </span>
+          <span className="font-bold w-6 h-6 bg-primary-200 rounded-full text-white text-center">G</span>
           {/* name */}
           <span className="font-bold">GOODFOOD</span>
         </h1>
@@ -34,11 +32,7 @@ function Sidebar() {
         <nav className="w-full">
           <ul className="sidebar">
             {menuItems.map((item) => (
-              <li
-                className={activeItem == item.id ? 'active' : ''}
-                key={item.id}
-                onClick={() => setActiveItem(item.id)}
-              >
+              <li className={activeItem == item.id ? 'active' : ''} key={item.id} onClick={() => setActiveItem(item.id)}>
                 <Link to={item.slag.toLowerCase()}>
                   <span className="icon">
                     <UseSVG path={item.icon} />
