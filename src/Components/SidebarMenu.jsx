@@ -9,7 +9,7 @@ import {
 } from '@ant-design/icons';
 import { Menu } from 'antd';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const items = [
   {
@@ -32,22 +32,24 @@ const SidebarMenu = () => {
   const location = useLocation();
   const label = location.pathname.split('/')[1];
   const itemSelected =
-    items[0].children.find((item) => item.slag.toLowerCase() == label.toLowerCase())?.key || '0';
+    items[0].children.find((item) => item.slag.toLowerCase() == label.toLowerCase())?.key || '1';
 
   const onClick = (e) => {
     navigate(items[0].children.find((item) => e.key == item.key).slag);
   };
   return (
     <section className="basis-60 min-h-screen">
-      <div className="h-16 border-b border-[#C8CBD9]">
-        <h1 className="h-full text-primary-200 flex items-center justify-center gap-x-2 cursor-pointer">
-          <span className="font-bold w-6 h-6 bg-primary-200 rounded-full text-white text-center">
-            G
-          </span>
-          {/* name */}
-          <span className="font-bold">GOODFOOD</span>
-        </h1>
-      </div>
+      <a href="/">
+        <div className="h-16 border-b border-[#C8CBD9]">
+          <h1 className="h-full text-primary-200 flex items-center justify-center gap-x-2 cursor-pointer">
+            <span className="font-bold w-6 h-6 bg-primary-200 rounded-full text-white text-center">
+              G
+            </span>
+            {/* name */}
+            <span className="font-bold">GOODFOOD</span>
+          </h1>
+        </div>
+      </a>
       <Menu
         onClick={onClick}
         style={{

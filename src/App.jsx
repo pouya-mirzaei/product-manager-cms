@@ -13,7 +13,7 @@ function App() {
       <SidebarMenu />
       <section className="flex flex-col grow">
         <Header />
-        <main>{router}</main>
+        <main className="px-5 py-2.5">{router}</main>
       </section>
     </>
   );
