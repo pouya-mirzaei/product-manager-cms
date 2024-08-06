@@ -17,13 +17,17 @@ const tailLayout = {
 };
 const NewProductForm = ({
   editing = false,
-  data = { name: '', price: '', quantity: '', imageUrl: '', rating: '', salesCount: '' },
+  data = { title: '', price: '', count: '', img: '', popularity: '', sale: '' },
+  onEdit,
 }) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    console.log(values);
-    if (editing) console.log('editing');
+    // console.log(values);
+    if (editing) {
+      // console.log('editing');
+      onEdit(values);
+    }
   };
 
   return (
@@ -37,12 +41,12 @@ const NewProductForm = ({
       }}
       scrollToFirstError={true}
       initialValues={{
-        name: data.name,
+        name: data.title,
         price: data.price,
-        quantity: data.quantity,
-        imageUrl: data.image,
-        rating: data.rating,
-        salesCount: data.salesCount,
+        quantity: data.count,
+        imageUrl: data.img,
+        rating: data.popularity,
+        salesCount: data.sale,
       }}
     >
       <Row>
@@ -93,7 +97,7 @@ const NewProductForm = ({
               },
             ]}
           >
-            <Input prefix={<AccountBookTwoTone />} type="number" max={100} min={0} />
+            <Input prefix={<AccountBookTwoTone />} type="number" max={1000000} min={0} />
           </Form.Item>
         </Col>
         <Col span={12}>

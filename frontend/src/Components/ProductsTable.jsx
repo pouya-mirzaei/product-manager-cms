@@ -1,65 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Flex, Space, Table, Tag, Image, Typography, Modal } from 'antd';
-import { CloseCircleTwoTone } from '@ant-design/icons';
 import NewProductForm from './NewProductForm';
 const Price = ({ price }) => (
   <Typography.Text type="secondary" strong>
     ${price}
   </Typography.Text>
 );
-let data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    price: 10.99, // Add decimals for better presentation
-    quantity: 11,
-    image: './public/img/oil.jpeg',
-    rating: 61,
-    salesCount: 11,
-  },
-  {
-    key: '2',
-    name: 'mmd heidari',
-    price: 100.99, // Add decimals for better presentation
-    quantity: 5,
-    image: './public/img/oil.jpeg',
-    rating: 65,
-    salesCount: 11,
-  },
-  {
-    key: '3',
-    name: 'pouya 006',
-    price: 54.99, // Add decimals for better presentation
-    quantity: 45,
-    image: './public/img/oil.jpeg',
-    rating: 64,
-    salesCount: 15,
-  },
-  {
-    key: '4',
-    name: 'Aidin the god',
-    price: 31.99, // Add decimals for better presentation
-    quantity: 4,
-    image: './public/img/oil.jpeg',
-    rating: 64,
-    salesCount: 13,
-  },
-  {
-    key: '5',
-    name: 'hashem the dark',
-    price: 0, // Add decimals for better presentation
-    quantity: 7,
-    image: './public/img/oil.jpeg',
-    rating: 67,
-    salesCount: 10,
-  },
-];
 
-const ProductsTable = () => {
+const ProductsTable = ({ pending, data, onUpdate }) => {
   const columns = [
     {
       title: 'Image',
-      dataIndex: 'image',
+      dataIndex: 'img',
       render: (link, data) => (
         <Image
           src={link}
@@ -74,7 +26,7 @@ const ProductsTable = () => {
     },
     {
       title: 'Name',
-      dataIndex: 'name',
+      dataIndex: 'title',
       sorter: (a, b) => a.name.localeCompare(b.name),
     },
     {
@@ -86,14 +38,14 @@ const ProductsTable = () => {
     },
     {
       title: 'Quantity',
-      dataIndex: 'quantity',
+      dataIndex: 'count',
       align: 'center',
-      render: (count, data) => {
+      render: (count) => {
         let color = count > 20 ? 'success' : count > 10 ? 'processing' : count > 5 ? 'warning' : 'error';
         return (
           <Tag color={color} bordered>
             {' '}
-            {data.quantity}
+            {count}
           </Tag>
         );
       },
@@ -101,7 +53,6 @@ const ProductsTable = () => {
     },
     {
       title: 'Action',
-      dataIndex: 'action',
       render: (_, data) => (
         <Flex justify="space-between" align="center">
           <Button onClick={() => handleDetails(data)} type="primary" color="green">
@@ -152,16 +103,16 @@ const ProductsTable = () => {
       title: `Deleting product from the database`,
       content: (
         <>
-          <p>are you sure you want to delete this product?</p>
+          <p>Are you sure you want to delete this product?</p>
           <div className="flex items-center mt-10">
             <div className="basis-1/4">
               <img
-                src={data.image}
-                alt={data.name}
+                src={data.img}
+                alt={data.title}
                 className=" w-16 h-auto rounded-full items-center justify-center  border-2 border-gray-300"
               />
             </div>
-            <div className="h-max float-start">{data.name}</div>
+            <div className="h-max float-start">{data.title}</div>
           </div>
         </>
       ),
@@ -178,7 +129,7 @@ const ProductsTable = () => {
       title: `${data.name}'s details`,
       content: (
         <>
-          <NewProductForm editing data={data} onEdit={() => edit(data)} />
+          <NewProductForm editing data={data} onEdit={(data) => edit(data)} />
         </>
       ),
       maskClosable: true,
@@ -195,10 +146,13 @@ const ProductsTable = () => {
 
   const deleteItem = (item) => {
     console.log(item);
+    onUpdate();
   };
 
   const edit = (data) => {
+    Modal.destroyAll();
     console.log(data);
+    onUpdate();
   };
 
   return (
@@ -208,6 +162,7 @@ const ProductsTable = () => {
       bordered // Add border for visual separation
       pagination={{ defaultPageSize: 5 }} // Enable pagination for larger datasets
       className="mt-10"
+      loading={pending}
     />
   );
 };
