@@ -15,23 +15,35 @@ const tailLayout = {
     span: 16,
   },
 };
-const NewProductForm = () => {
+const NewProductForm = ({
+  editing = false,
+  data = { name: '', price: '', quantity: '', imageUrl: '', rating: '', salesCount: '' },
+}) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
     console.log(values);
+    if (editing) console.log('editing');
   };
 
   return (
     <Form
       {...layout}
       form={form}
-      name="add-new-product"
+      name={editing ? 'add-new-product' : 'edit-product'}
       onFinish={onFinish}
       style={{
         maxWidth: 1200,
       }}
       scrollToFirstError={true}
+      initialValues={{
+        name: data.name,
+        price: data.price,
+        quantity: data.quantity,
+        imageUrl: data.image,
+        rating: data.rating,
+        salesCount: data.salesCount,
+      }}
     >
       <Row>
         <Col span={12}>
@@ -63,7 +75,7 @@ const NewProductForm = () => {
               },
             ]}
           >
-            <Input prefix={<DollarTwoTone />} type="number" min={0} />
+            <Input prefix={<DollarTwoTone />} />
           </Form.Item>
         </Col>
       </Row>
@@ -86,7 +98,7 @@ const NewProductForm = () => {
         </Col>
         <Col span={12}>
           <Form.Item
-            name="image-url"
+            name="imageUrl"
             label="Image url"
             validateStatus="success"
             hasFeedback
@@ -120,7 +132,7 @@ const NewProductForm = () => {
         </Col>
         <Col span={12}>
           <Form.Item
-            name="sales-count"
+            name="salesCount"
             label="Sales count"
             hasFeedback
             rules={[
@@ -134,11 +146,10 @@ const NewProductForm = () => {
           </Form.Item>
         </Col>
       </Row>
-
-      <Form.Item {...tailLayout}>
+      <Form.Item {...tailLayout} style={{ marginTop: 10 }}>
         <Space>
           <Button type="primary" htmlType="submit">
-            Add
+            {!editing ? 'Add ' : 'Submit changes'}
           </Button>
         </Space>
       </Form.Item>

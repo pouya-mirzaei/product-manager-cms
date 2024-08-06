@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Flex, Space, Table, Tag, Image, Typography, Modal } from 'antd';
 import { CloseCircleTwoTone } from '@ant-design/icons';
+import NewProductForm from './NewProductForm';
 const Price = ({ price }) => (
   <Typography.Text type="secondary" strong>
     ${price}
@@ -13,6 +14,8 @@ let data = [
     price: 10.99, // Add decimals for better presentation
     quantity: 11,
     image: './public/img/oil.jpeg',
+    rating: 61,
+    salesCount: 11,
   },
   {
     key: '2',
@@ -20,6 +23,8 @@ let data = [
     price: 100.99, // Add decimals for better presentation
     quantity: 5,
     image: './public/img/oil.jpeg',
+    rating: 65,
+    salesCount: 11,
   },
   {
     key: '3',
@@ -27,6 +32,8 @@ let data = [
     price: 54.99, // Add decimals for better presentation
     quantity: 45,
     image: './public/img/oil.jpeg',
+    rating: 64,
+    salesCount: 15,
   },
   {
     key: '4',
@@ -34,6 +41,8 @@ let data = [
     price: 31.99, // Add decimals for better presentation
     quantity: 4,
     image: './public/img/oil.jpeg',
+    rating: 64,
+    salesCount: 13,
   },
   {
     key: '5',
@@ -41,6 +50,8 @@ let data = [
     price: 0, // Add decimals for better presentation
     quantity: 7,
     image: './public/img/oil.jpeg',
+    rating: 67,
+    salesCount: 10,
   },
 ];
 
@@ -163,7 +174,19 @@ const ProductsTable = () => {
     });
   };
   const handleEdit = (data) => {
-    console.log(data.quantity);
+    Modal.confirm({
+      title: `${data.name}'s details`,
+      content: (
+        <>
+          <NewProductForm editing data={data} onEdit={() => edit(data)} />
+        </>
+      ),
+      maskClosable: true,
+      width: 1200,
+      centered: true,
+      destroyOnClose: true,
+      footer: () => <></>,
+    });
   };
 
   // ------------------------------------------------------------------
@@ -172,6 +195,10 @@ const ProductsTable = () => {
 
   const deleteItem = (item) => {
     console.log(item);
+  };
+
+  const edit = (data) => {
+    console.log(data);
   };
 
   return (
