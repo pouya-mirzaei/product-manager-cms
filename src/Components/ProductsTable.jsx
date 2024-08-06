@@ -109,8 +109,33 @@ const ProductsTable = () => {
   ];
 
   const handleDetails = (data) => {
-    console.log(data.quantity);
+    const allDetails = Object.entries(data).map(([key, value]) => ({
+      key, // Use key for proper table rendering
+      title: key,
+      value,
+    }));
+
+    Modal.info({
+      title: `${data.name}'s details`,
+      content: (
+        <>
+          <div className="flex items-center mt-10"></div>
+          <Table
+            dataSource={allDetails}
+            columns={[
+              { title: 'Detail', dataIndex: 'title' },
+              { title: 'Value', dataIndex: 'value' },
+            ]}
+            pagination={false}
+          />
+        </>
+      ),
+      maskClosable: true,
+      width: 500,
+      centered: true,
+    });
   };
+
   const handleDelete = (data) => {
     Modal.confirm({
       title: `Deleting product from the database`,

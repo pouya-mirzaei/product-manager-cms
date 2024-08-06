@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Col, Form, Input, Row, Space } from 'antd';
 import { AccountBookTwoTone, DollarTwoTone, EditTwoTone, FileImageTwoTone } from '@ant-design/icons';
 const layout = {
@@ -115,7 +115,7 @@ const NewProductForm = () => {
             ]}
             help={'On scale 0-100'}
           >
-            <Input prefix={<FileImageTwoTone />} max={100} min={0} />
+            <Input prefix={<FileImageTwoTone />} max={100} min={0} type="number" />
           </Form.Item>
         </Col>
         <Col span={12}>
