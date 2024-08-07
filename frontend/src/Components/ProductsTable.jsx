@@ -7,7 +7,7 @@ const Price = ({ price }) => (
   </Typography.Text>
 );
 
-const ProductsTable = ({ pending, data, onUpdate }) => {
+const ProductsTable = ({ pending, data, updateTable }) => {
   const columns = [
     {
       title: 'Image',
@@ -27,7 +27,7 @@ const ProductsTable = ({ pending, data, onUpdate }) => {
     {
       title: 'Name',
       dataIndex: 'title',
-      sorter: (a, b) => a.name.localeCompare(b.name),
+      sorter: (a, b) => a.title.localeCompare(b.title),
     },
     {
       title: 'Price',
@@ -146,13 +146,13 @@ const ProductsTable = ({ pending, data, onUpdate }) => {
 
   const deleteItem = (item) => {
     console.log(item);
-    onUpdate();
+    updateTable();
   };
 
   const edit = (data) => {
     Modal.destroyAll();
+    updateTable();
     console.log(data);
-    onUpdate();
   };
 
   return (

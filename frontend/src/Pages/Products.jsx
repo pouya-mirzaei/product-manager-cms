@@ -16,7 +16,9 @@ export default function Products() {
 
         console.log(res);
         setData(res);
-        setPending(false);
+        setTimeout(() => {
+          setPending(false);
+        }, 500);
       });
   };
 
@@ -28,8 +30,8 @@ export default function Products() {
     <section>
       <h3 className="text-2xl font-semibold my-5">Add New Product</h3>
       <NewProductForm />
-      {!data[0] && <ErrorBox message={'No fucking product'} />}
-      <ProductsTable data={data} pending={pending} onUpdate={fetchData} />
+      {!data.length && <ErrorBox message={'No fucking product'} />}
+      <ProductsTable data={data} pending={pending} updateTable={fetchData} />
     </section>
   );
 }
