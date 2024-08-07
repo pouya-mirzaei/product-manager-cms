@@ -17,17 +17,17 @@ const tailLayout = {
 };
 const NewProductForm = ({
   editing = false,
-  data = { title: '', price: '', count: '', img: '', popularity: '', sale: '' },
+  data = { title: '', price: '', count: '', img: '', popularity: '', sale: '', colors: '', productDesc: '', url: '' },
   onEdit,
 }) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    // console.log(values);
     if (editing) {
-      // console.log('editing');
       onEdit(values);
     }
+
+    // add new product
   };
 
   return (
@@ -47,6 +47,9 @@ const NewProductForm = ({
         imageUrl: data.img,
         rating: data.popularity,
         salesCount: data.sale,
+        colors: data.colors,
+        description: data.productDesc,
+        slag: data.url,
       }}
     >
       <Row>
@@ -55,7 +58,7 @@ const NewProductForm = ({
             name="name"
             label="Name"
             hasFeedback
-            validateStatus="validating"
+            // validateStatus="validating"
             rules={[
               {
                 required: true,
@@ -70,7 +73,7 @@ const NewProductForm = ({
           <Form.Item
             name="price"
             label="Price"
-            validateStatus="warning"
+            // validateStatus="warning"
             hasFeedback
             rules={[
               {
@@ -88,7 +91,7 @@ const NewProductForm = ({
           <Form.Item
             name="quantity"
             label="Quantity"
-            validateStatus="error"
+            // validateStatus="error"
             hasFeedback
             rules={[
               {
@@ -104,7 +107,7 @@ const NewProductForm = ({
           <Form.Item
             name="imageUrl"
             label="Image url"
-            validateStatus="success"
+            // validateStatus="success"
             hasFeedback
             rules={[
               {
@@ -147,6 +150,46 @@ const NewProductForm = ({
             ]}
           >
             <Input prefix={<FileImageTwoTone />} type="number" />
+          </Form.Item>
+        </Col>
+      </Row>
+      <Row>
+        <Col span={12}>
+          <Form.Item
+            name="slag"
+            label="Slag"
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: 'Enter the Slag of the product',
+              },
+            ]}
+          >
+            <Input prefix={<FileImageTwoTone />} />
+          </Form.Item>
+        </Col>
+
+        <Col span={12}>
+          <Form.Item
+            name="colors"
+            label="Colors count"
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: 'Enter the colors count of the product',
+              },
+            ]}
+          >
+            <Input prefix={<FileImageTwoTone />} max={100} min={0} type="number" />
+          </Form.Item>
+        </Col>
+      </Row>
+      <Row>
+        <Col span={24}>
+          <Form.Item name="description" label="Description" hasFeedback>
+            <Input.TextArea autoSize={{ minRows: 4, maxRows: 8 }} />
           </Form.Item>
         </Col>
       </Row>

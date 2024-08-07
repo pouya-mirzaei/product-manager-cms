@@ -17,7 +17,6 @@ export default function Products() {
       .then((res) => {
         res.map((p) => (p.key = p.id));
 
-        console.log(res);
         setData(res);
         setTimeout(() => {
           setPending(false);

@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Flex, Space, Table, Tag, Image, Typography, Modal, notification } from 'antd';
+import { Button, Flex, Space, Table, Tag, Image, Typography, Modal } from 'antd';
 import NewProductForm from './NewProductForm';
 import useNotification from '../hooks/useNotification';
-const Price = ({ price }) => (
-  <Typography.Text type="secondary" strong>
-    ${price}
-  </Typography.Text>
-);
+const Price = ({ price }) => {
+  return (
+    <Typography.Text type="secondary" strong>
+      ${formatNumber(price)}
+    </Typography.Text>
+  );
+};
+
+const formatNumber = (num) => new Intl.NumberFormat('en-us').format(num);
 
 const ProductsTable = ({ pending, data, updateTable }) => {
   const columns = [
@@ -45,8 +49,7 @@ const ProductsTable = ({ pending, data, updateTable }) => {
         let color = count > 100 ? 'success' : count > 20 ? 'processing' : count > 5 ? 'warning' : 'error';
         return (
           <Tag color={color} bordered>
-            {' '}
-            {count}
+            {formatNumber(count)}
           </Tag>
         );
       },
@@ -78,6 +81,10 @@ const ProductsTable = ({ pending, data, updateTable }) => {
       value,
     }));
 
+    allDetails.map((item) => {
+      if (Number.isInteger(item.value)) item.value = formatNumber(item.value);
+    });
+
     Modal.info({
       title: `${data.name}'s details`,
       content: (
@@ -107,11 +114,7 @@ const ProductsTable = ({ pending, data, updateTable }) => {
           <p>Are you sure you want to delete this product?</p>
           <div className="flex items-center mt-10">
             <div className="basis-1/4">
-              <img
-                src={data.img}
-                alt={data.title}
-                className=" w-16 h-auto rounded-full items-center justify-center  border-2 border-gray-300"
-              />
+              <Image src={data.img} alt={data.name} width={50} height={50} style={{ borderRadius: '50%' }} />
             </div>
             <div className="h-max float-start">{data.title}</div>
           </div>
@@ -130,7 +133,7 @@ const ProductsTable = ({ pending, data, updateTable }) => {
       title: `${data.name}'s details`,
       content: (
         <>
-          <NewProductForm editing data={data} onEdit={(data) => edit(data)} />
+          <NewProductForm editing data={data} onEdit={(inputData) => edit(inputData, data.id)} />
         </>
       ),
       maskClosable: true,
@@ -144,7 +147,6 @@ const ProductsTable = ({ pending, data, updateTable }) => {
   // ------------------------------------------------------------------
 
   // Operations :
-
   const toast = useNotification();
 
   const deleteItem = (item) => {
@@ -161,10 +163,26 @@ const ProductsTable = ({ pending, data, updateTable }) => {
       });
   };
 
-  const edit = (data) => {
-    Modal.destroyAll();
-    updateTable();
-    console.log(data);
+  const edit = ({ name: title, price, quantity: count, imageUrl: img, rating: popularity, salesCount: sale, colors }, id) => {
+    let newData = { title, price, count, img, popularity, sale, colors };
+
+    fetch(`http://localhost:3000/api/products/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+      },
+
+      body: JSON.stringify(newData),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        toast.createNotification('success', 'The product updated successfully', 'Hellllll yeahhhh');
+        Modal.destroyAll();
+        updateTable();
+      })
+      .catch((err) => {
+        toast.createNotification('error', 'Ahh damn this errors : ', err.message);
+      });
   };
 
   return (
