@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import NewProductForm from '../Components/NewProductForm';
 import ProductsTable from '../Components/ProductsTable';
 import ErrorBox from '../Components/ErrorBox';
+import useNotification from '../hooks/useNotification';
 
 export default function Products() {
   const [data, setData] = useState([]);
   const [pending, setPending] = useState(true);
+
+  const toast = useNotification();
 
   const fetchData = () => {
     setPending(true);
@@ -19,6 +22,11 @@ export default function Products() {
         setTimeout(() => {
           setPending(false);
         }, 500);
+      })
+      .catch((err) => {
+        setPending(false);
+        setData([]);
+        toast.createNotification('error', 'There was an error getting the products', err.message);
       });
   };
 

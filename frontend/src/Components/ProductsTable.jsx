@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Flex, Space, Table, Tag, Image, Typography, Modal } from 'antd';
+import { Button, Flex, Space, Table, Tag, Image, Typography, Modal, notification } from 'antd';
 import NewProductForm from './NewProductForm';
+import useNotification from '../hooks/useNotification';
 const Price = ({ price }) => (
   <Typography.Text type="secondary" strong>
     ${price}
@@ -41,7 +42,7 @@ const ProductsTable = ({ pending, data, updateTable }) => {
       dataIndex: 'count',
       align: 'center',
       render: (count) => {
-        let color = count > 20 ? 'success' : count > 10 ? 'processing' : count > 5 ? 'warning' : 'error';
+        let color = count > 100 ? 'success' : count > 20 ? 'processing' : count > 5 ? 'warning' : 'error';
         return (
           <Tag color={color} bordered>
             {' '}
@@ -49,7 +50,7 @@ const ProductsTable = ({ pending, data, updateTable }) => {
           </Tag>
         );
       },
-      sorter: (a, b) => a.quantity - b.quantity,
+      sorter: (a, b) => a.count - b.count,
     },
     {
       title: 'Action',
@@ -144,9 +145,20 @@ const ProductsTable = ({ pending, data, updateTable }) => {
 
   // Operations :
 
+  const toast = useNotification();
+
   const deleteItem = (item) => {
-    console.log(item);
-    updateTable();
+    fetch(`http://localhost:3000/api/products/${item.id}`, {
+      method: 'DELETE',
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        updateTable();
+        toast.createNotification('success', 'The product deleted successfully');
+      })
+      .catch((err) => {
+        toast.createNotification('error', 'Failed to delete', err.message);
+      });
   };
 
   const edit = (data) => {
@@ -156,14 +168,16 @@ const ProductsTable = ({ pending, data, updateTable }) => {
   };
 
   return (
-    <Table
-      columns={columns}
-      dataSource={data}
-      bordered // Add border for visual separation
-      pagination={{ defaultPageSize: 5 }} // Enable pagination for larger datasets
-      className="mt-10"
-      loading={pending}
-    />
+    <>
+      <Table
+        columns={columns}
+        dataSource={data}
+        bordered // Add border for visual separation
+        pagination={{ defaultPageSize: 5 }} // Enable pagination for larger datasets
+        className="mt-10"
+        loading={pending}
+      />
+    </>
   );
 };
 export default ProductsTable;
