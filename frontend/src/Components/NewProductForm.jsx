@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Col, Form, Input, Row, Space } from 'antd';
 import { AccountBookTwoTone, DollarTwoTone, EditTwoTone, FileImageTwoTone } from '@ant-design/icons';
+import useNotification from '../hooks/useNotification';
 const layout = {
   labelCol: {
     span: 4,
@@ -19,15 +20,47 @@ const NewProductForm = ({
   editing = false,
   data = { title: '', price: '', count: '', img: '', popularity: '', sale: '', colors: '', productDesc: '', url: '' },
   onEdit,
+  updateTable,
 }) => {
   const [form] = Form.useForm();
+  const toast = useNotification();
 
   const onFinish = (values) => {
     if (editing) {
       onEdit(values);
+      return;
     }
 
+    let newData = {
+      title: values.name,
+      price: values.price,
+      count: values.quantity,
+      img: values.imageUrl,
+      sale: values.salesCount,
+      popularity: values.rating,
+      colors: values.colors,
+      description: values.description,
+      slag: values.slag,
+    };
+
     // add new product
+    fetch(`http://localhost:3000/api/products/`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+
+      body: JSON.stringify(newData),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        toast.createNotification('success', 'The product updated successfully', 'Hellllll yeahhhh');
+        updateTable();
+        form.resetFields();
+      })
+      .catch((err) => {
+        toast.createNotification('error', 'Ahh damn this errors : ', err.message);
+      });
   };
 
   return (
@@ -39,6 +72,7 @@ const NewProductForm = ({
       style={{
         maxWidth: 1200,
       }}
+      autoComplete="off"
       scrollToFirstError={true}
       initialValues={{
         name: data.title,

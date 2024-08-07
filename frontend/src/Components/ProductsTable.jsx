@@ -163,8 +163,11 @@ const ProductsTable = ({ pending, data, updateTable }) => {
       });
   };
 
-  const edit = ({ name: title, price, quantity: count, imageUrl: img, rating: popularity, salesCount: sale, colors }, id) => {
-    let newData = { title, price, count, img, popularity, sale, colors };
+  const edit = (
+    { name: title, price, quantity: count, imageUrl: img, rating: popularity, salesCount: sale, colors, description, slag },
+    id
+  ) => {
+    let newData = { title, price, count, img, popularity, sale, colors, description, slag };
 
     fetch(`http://localhost:3000/api/products/${id}`, {
       method: 'PUT',
