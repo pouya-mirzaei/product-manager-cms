@@ -1,4 +1,4 @@
-main url = http://localhost:3000/api/
+main url = http://localhost:8000/api/
 
 
 ///////////////////// Start Products Routes (sub_url => products/) //////////////////////
@@ -10,7 +10,6 @@ main url = http://localhost:3000/api/
 2. Delete Main Product
     method => Delete
     req param => productID => Products ID
-
 
 3. Update Main Product
     method => Put
@@ -57,6 +56,16 @@ main url = http://localhost:3000/api/
     req body => {
         body => محتوای جدید کامنت
     }
+
+4. Accept Comment
+    method: Post
+    sub_url: /accept
+    req param => commentId => Comment ID
+
+5. Reject Comment
+    method: Post
+    sub_url: /reject
+    req param => commentId => Comment ID
 
 ///////////////////// Finish comments Routes (sub_url => comments/) //////////////////////
 

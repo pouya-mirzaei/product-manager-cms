@@ -98,14 +98,14 @@ export default function Comments() {
             <Button onClick={() => handleDelete(data)} type="primary" danger>
               Delete
             </Button>
-            <Button onClick={() => handleEdit(data)} type="dashed" danger>
+            <Button onClick={() => handleEdit(data)} type="primary" ghost>
               Edit
             </Button>
             <Button onClick={() => handleAnswer(data)} type="primary" ghost>
               Answer
             </Button>
-            <Button onClick={() => handleAcceptComment(data)} type="primary">
-              Accept
+            <Button onClick={() => handleAcceptComment(data)} type="primary" danger={data.isAccept} ghost={data.isAccept}>
+              {!data.isAccept ? 'Accept' : 'Reject'}
             </Button>
           </Flex>
         </>
@@ -161,7 +161,30 @@ export default function Comments() {
   };
 
   const handleAnswer = () => {};
-  const handleAcceptComment = () => {};
+  const handleAcceptComment = (data) => {
+    Modal.confirm({
+      title: `Are you sure you want to ${data.isAccept ? 'reject' : 'accept'} this comment ?`,
+      content: (
+        <>
+          <Table
+            columns={[
+              { title: 'User', dataIndex: 'userID' },
+              { title: 'Product', dataIndex: 'productID' },
+              { title: 'Comment Message', dataIndex: 'body', width: 600 },
+            ]}
+            dataSource={[data]}
+            pagination={false}
+          />
+        </>
+      ),
+      maskClosable: true,
+      width: 800,
+      centered: true,
+      okText: 'Yes',
+      cancelText: 'No',
+      onOk: () => toggleCommentVerification(data),
+    });
+  };
 
   // Operation --------------------------------------------------------------------
 
@@ -199,6 +222,21 @@ export default function Comments() {
         updateTable();
       })
       .catch((err) => toast.createNotification('error', 'Fuck this shit', err.message));
+  };
+
+  const toggleCommentVerification = (data) => {
+    let reqUrl = `http://localhost:3000/api/comments/${data.isAccept ? 'reject/' : 'accept/'}${data.id}`;
+    fetch(reqUrl, {
+      method: 'POST',
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        updateTable();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
