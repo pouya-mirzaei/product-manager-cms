@@ -1,4 +1,4 @@
-import { Button, Flex, Image, Modal, Table, Tag } from 'antd';
+import { Button, Flex, Form, Input, Modal, Table, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 import useNotification from '../hooks/useNotification';
 
@@ -6,6 +6,8 @@ export default function Comments() {
   const [comments, setComments] = useState([]);
   const [pending, setPending] = useState(true);
   const toast = useNotification();
+
+  const [form] = Form.useForm();
 
   const updateTable = () => {
     fetch('http://localhost:3000/api/comments')
@@ -136,7 +138,28 @@ export default function Comments() {
       onOk: () => deleteItem(data),
     });
   };
-  const handleEdit = () => {};
+
+  const handleEdit = (data) => {
+    form.setFieldValue('commentMsg', data.body);
+    Modal.confirm({
+      title: `${data.productID}'s comment message`,
+      content: (
+        <>
+          <Form form={form}>
+            <Form.Item name="commentMsg">
+              <Input.TextArea autoSize={{ minRows: 3 }} />
+            </Form.Item>
+          </Form>
+        </>
+      ),
+      maskClosable: true,
+      width: 500,
+      centered: true,
+      destroyOnClose: true,
+      onOk: () => editComment(data.id),
+    });
+  };
+
   const handleAnswer = () => {};
   const handleAcceptComment = () => {};
 
@@ -156,6 +179,26 @@ export default function Comments() {
       .catch((err) => {
         toast.createNotification('error', 'Failed to connect to the server', err.message);
       });
+  };
+
+  const editComment = (id) => {
+    let comment = form.getFieldValue('commentMsg');
+    console.log(comment);
+
+    fetch(`http://localhost:3000/api/comments/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({ body: comment }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.affectedRows) toast.createNotification('success', 'The comment deleted successfully');
+        else toast.createNotification('error', 'There was no such a product to delete');
+        updateTable();
+      })
+      .catch((err) => toast.createNotification('error', 'Fuck this shit', err.message));
   };
 
   return (
