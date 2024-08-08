@@ -1,22 +1,28 @@
-import { Button, Flex, Modal, Table, Tag } from 'antd';
+import { Button, Flex, Image, Modal, Table, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 import useNotification from '../hooks/useNotification';
 
 export default function Comments() {
   const [comments, setComments] = useState([]);
+  const [pending, setPending] = useState(true);
   const toast = useNotification();
 
-  useEffect(() => {
+  const updateTable = () => {
     fetch('http://localhost:3000/api/comments')
       .then((res) => res.json())
       .then((res) => {
         res.map((p) => (p.key = p.id));
 
         setComments(res);
+        setPending(false);
       })
       .catch((err) => {
-        console.log(err);
+        toast.createNotification('error', 'Failed to connect to the server', err.message);
       });
+  };
+
+  useEffect(() => {
+    updateTable();
   }, []);
 
   const columns = [
@@ -105,10 +111,57 @@ export default function Comments() {
     },
   ];
 
+  const handleDelete = (data) => {
+    Modal.confirm({
+      title: `Deleting comment from the database`,
+      content: (
+        <>
+          <p className="my-5">Are you sure you want to delete this comment?</p>
+          <Table
+            columns={[
+              { title: 'User', dataIndex: 'userID' },
+              { title: 'Product', dataIndex: 'productID' },
+              { title: 'Comment Message', dataIndex: 'body', width: 600 },
+            ]}
+            dataSource={[data]}
+            pagination={false}
+          />
+        </>
+      ),
+      maskClosable: true,
+      width: 800,
+      centered: true,
+      okText: 'Yes',
+      cancelText: 'No',
+      onOk: () => deleteItem(data),
+    });
+  };
+  const handleEdit = () => {};
+  const handleAnswer = () => {};
+  const handleAcceptComment = () => {};
+
+  // Operation --------------------------------------------------------------------
+
+  const deleteItem = (data) => {
+    fetch(`http://localhost:3000/api/comments/${data.id}`, {
+      method: 'DELETE',
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        Modal.destroyAll();
+        if (res.affectedRows) toast.createNotification('success', 'The comment deleted successfully');
+        else toast.createNotification('error', 'There was no such a product to delete');
+        updateTable();
+      })
+      .catch((err) => {
+        toast.createNotification('error', 'Failed to connect to the server', err.message);
+      });
+  };
+
   return (
     <>
       <h1></h1>
-      <Table columns={columns} dataSource={comments} bordered />
+      <Table columns={columns} dataSource={comments} bordered loading={pending} />
     </>
   );
 }
