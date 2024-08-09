@@ -12,6 +12,7 @@ export default function Comments() {
   const [form] = Form.useForm();
 
   const updateTable = () => {
+    setPending(true);
     fetch('http://localhost:3000/api/comments')
       .then((res) => res.json())
       .then((res) => {
