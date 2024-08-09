@@ -36,7 +36,7 @@ Before you begin, ensure you have the following installed:
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/sabzlearn-shop.git
+   git clone https://github.com/pouya-mirzaei/product-manager-cms.git
    cd sabzlearn-shop
    ```
 
