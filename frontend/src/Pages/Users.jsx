@@ -98,8 +98,33 @@ export default function Users() {
   };
 
   const handleRestore = (data) => handleDelete(data, true);
+  const handleDetails = (data) => {
+    const allDetails = Object.entries(data).map(([key, value]) => ({
+      key, // Use key for proper table rendering
+      title: key,
+      value,
+    }));
 
-  const handleDetails = (data) => {};
+    Modal.info({
+      title: `${data.firsname}'s details`,
+      content: (
+        <>
+          <div className="flex items-center mt-10"></div>
+          <Table
+            dataSource={allDetails}
+            columns={[
+              { title: 'Detail', dataIndex: 'title' },
+              { title: 'Value', dataIndex: 'value' },
+            ]}
+            pagination={false}
+          />
+        </>
+      ),
+      maskClosable: true,
+      width: 500,
+      centered: true,
+    });
+  };
   const handleEdit = (data) => {};
 
   // Operations : ------------------------------------------
