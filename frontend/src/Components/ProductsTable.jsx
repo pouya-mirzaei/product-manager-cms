@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Flex, Space, Table, Tag, Image, Typography, Modal } from 'antd';
 import NewProductForm from './NewProductForm';
 import useNotification from '../hooks/useNotification';
+import HeaderTitle from './HeaderTitle';
 const Price = ({ price }) => {
   return (
     <Typography.Text type="secondary" strong>
@@ -190,6 +191,8 @@ const ProductsTable = ({ pending, data, updateTable }) => {
 
   return (
     <>
+      <HeaderTitle msg={'List of the available products'} />
+
       <Table
         columns={columns}
         dataSource={data}

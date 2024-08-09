@@ -3,6 +3,7 @@ import NewProductForm from '../Components/NewProductForm';
 import ProductsTable from '../Components/ProductsTable';
 import ErrorBox from '../Components/ErrorBox';
 import useNotification from '../hooks/useNotification';
+import HeaderTitle from '../Components/HeaderTitle';
 
 export default function Products() {
   const [data, setData] = useState([]);
@@ -35,7 +36,7 @@ export default function Products() {
 
   return (
     <section>
-      <h3 className="text-2xl font-semibold my-5">Add New Product</h3>
+      <HeaderTitle msg="Add New Product" />
       <NewProductForm updateTable={fetchData} />
       {!data.length && <ErrorBox message={'No fucking product'} />}
       <ProductsTable data={data} pending={pending} updateTable={fetchData} />

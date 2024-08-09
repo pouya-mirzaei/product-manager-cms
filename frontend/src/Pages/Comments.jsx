@@ -1,6 +1,8 @@
 import { Button, Flex, Form, Input, Modal, Table, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 import useNotification from '../hooks/useNotification';
+import ErrorBox from '../Components/ErrorBox';
+import HeaderTitle from '../Components/HeaderTitle';
 
 export default function Comments() {
   const [comments, setComments] = useState([]);
@@ -90,7 +92,8 @@ export default function Comments() {
       align: 'center',
     },
     {
-      title: 'action',
+      title: 'Actions',
+      align: 'center',
       width: 350,
       render: (_, data) => (
         <>
@@ -240,9 +243,11 @@ export default function Comments() {
   };
 
   return (
-    <>
-      <h1></h1>
+    <section>
+      <HeaderTitle msg={'List of the Comments'} />
+
+      {!comments.length && <ErrorBox message={'There is no comments in the comments in the webserver right now'} />}
       <Table columns={columns} dataSource={comments} bordered loading={pending} />
-    </>
+    </section>
   );
 }
