@@ -44,7 +44,7 @@ Before you begin, ensure you have the following installed:
 
    - Open phpMyAdmin.
    - Create a new database named `database_name`
-   - Import the `sabzlearn_shop.sql` file into the your database.
+   - Import the `initalDatas.sql` file into your database.
 
 3. **Install Dependencies:**
 
@@ -105,7 +105,7 @@ After installing the dependencies, you can run the backend server.
 
 2. **Start the Frontend**
 
-   Open a new terminal and navigate to the `frontend` directory and run the following command:
+   Open a new terminal ,navigate to the `frontend` directory and run the following command:
 
    ```bash
    npm run dev
